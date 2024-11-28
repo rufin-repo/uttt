@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>uTTT in Worker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="gold">
+
+<style>
+body,html
+{
+  width:100%; /*calc(100% - 1px);*/
+  padding:0;margin:0;border:0;
+  border-collapse:collapse;
+  height:100%; /*calc(100% - 1px);*/
+  font-family:Arial,sans-serif;
+  --swatchBg1:rgb(43, 43, 47);--swatchBg2:goldenrod;--swatchBg3:#fffff0;--swatchBg4:#000;--swatchBg5:var(--swatchBg2);--swatchUI1:#755E55;--swatchUI2:#ffffff;--swatchUI3:maroon;--swatchUI4:moccasin}.noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.CWAUITable canvas{text-align:top;display:block}.buttonTab{border-collapse:collapse;border-width:0;margin:0;padding:0;background:0 0;border:none}tr#topButtons{height:40px;background-color:#708090}tr#calcbtnsrow{background-color:#778899}table.CWAUITable{position:fixed;top:0;left:0;width:100%;height:100%;padding:0;margin:0;border:none;border-collapse:collapse}#CWAMainCanvasTd,#CWAMainCanvasTr,#CWAStatusTxtTr{border:0;padding:0;margin:0;vertical-align:top;overflow:hidden;border-collapse:collapse}#CWAMainCanvasTd,#CWAMainCanvasTr{height:100%;width:100%}.CWAStatusTxt{padding:0 4px 0 4px;font-family:Arial,sans-serif;height:20px;background-color:#000;color:#fff;overflow:hidden}.dialogButton{color:#000;padding:6px 12px 6px 12px;border-radius:8px;border:none;background-color:#dcdcdc;float:right;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.dialogButton:hover{background-color:#eee;border:1px;border-color:#dcdcdc}.dialogButton:disabled,.dialogButton:disabled:hover{background-color:silver;color:#666}.dialogButton.caution{background-color:#ffe4e1}.dialogButton.caution:hover{background-color:pink}.dialogButton.darker{background-color:silver}.dialogButton.darker:hover{background-color:#dcdcdc}.flushRight{float:right}.flushLeft{float:left}.dangerFlushLeft{float:left;background-color:#ffe4e1}.alignRight{text-align:right}.dialogDismissButtonsDiv button{margin:5px}.genericQueryDiv{position:fixed;background-color:#fff;min-width:320px;max-height:90%;top:20px;left:50%;overflow:auto;padding:2px;border-radius:4px;-ms-transform:translateX(-50%);-webkit-transform:translateX(-50%);transform:translateX(-50%);z-index:2;box-shadow:3px 12px 16px 4px rgba(0,0,0,.25)}.genericQueryMsgDiv{padding:40px 0;background:0 0}.alertBoxDiv{position:fixed;background-color:#fff;min-width:320px;top:20px;left:50%;padding:2px;-ms-transform:translateX(-50%);-webkit-transform:translateX(-50%);transform:translateX(-50%);-webkit-border-radius:8px;-moz-border-radius:8px;border-radius:8px;z-index:3;box-shadow:3px 12px 16px 4px rgba(0,0,0,.25)}table.alertBoxTable{background:0 0;padding:0;margin:0;width:100%}table.alertBoxTable tr td{padding:10px}table.alertBoxTable tr:nth-child(1) td{padding:2px;background-color:gold}table.alertBoxTable tr:nth-last-child(1) td{padding:10px;font-size:20px}.alertBoxDiv div.dialogDismissButtonsDiv button{width:80px;background-color:#ffeb7d}.alertBoxDiv div.dialogDismissButtonsDiv button:hover{width:80px;background-color:#ffe23e}.alertBoxIconDiv{width:40px;height:40px;background:0 0;float:left;vertical-align:top;margin:2px 12px 2px 2px}#alertBoxMsgDiv,#genericQueryMsgDiv{height:100%;width:100%;padding:0}.buttonPanelDiv{position:absolute;background-color:#fff;top:0;left:0;width:400px;height:200px;padding:4px;border-radius:4px;z-index:1;box-shadow:3px 8px 16px 8px rgba(0,0,0,.2)}.buttonPanelDiv.leftPointer::after{content:"";position:absolute;top:var(--panelPointerY);left:-20px;bottom:auto;border-style:solid;border-width:10px 20px 10px 0;border-color:transparent #fff}h1.splash{text-align:center;font-size:7vw;font-family:'Courier New',monospace;font-weight:900}.aboutboxlogo{font-size:30px;font-family:'Courier New',monospace;font-weight:900}h3.splash{text-align:center}.textinfoarea{font-family:'Courier New',courier new,courier;position:fixed;background-color:gold;min-width:50%;min-height:20%;max-height:90%;top:50%;left:50%;overflow:hidden;padding:4px;-ms-transform:translate(-50%,-50%);-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);z-index:2;box-shadow:3px 8px 16px 0 rgba(0,0,0,.2)
+}
+.bigtable {
+  position: fixed; /* Fixed so that it is unaffected by scrolling or flicking.*/
+  /* if position:absolute is used, an "onscroll" event handler must be added to
+     reposition the top of this table (after deboucing):
+       UITable.style.top=document.body.scrollTop.toString()+"px"
+     o.w. the ui might got flicked outside the window boundary in some mobile
+     browsers (e.g. mobile safari)
+  */
+  top:0px;
+  left:0px;
+  width: 100%;
+  height: 100%;
+  padding:0px;  /* T R B L */
+  margin:0px;
+  border:none;
+  border-collapse:collapse;
+}
+
+.filldiv, .bigtable td{
+  height:100%;
+  padding:0px;  /* T R B L */
+  margin:0px;
+  border:none;
+  border-collapse:collapse;
+}
+#board {
+  width: 100%;
+  height: 100%;
+  padding:0px;  /* T R B L */
+  margin:0px;
+  border:none;
+  border-collapse:collapse;
+}
+div.btnlist {
+  height: 40px;
+  width:240px;
+}
+tr#statusrow {
+  height:40px;
+  background: -webkit-linear-gradient(#DDC, #FFF 70%);
+  background: -moz-linear-gradient(#DDC, #FFF 70%);
+  background: -ms-linear-gradient(#DDC, #FFF 70%);
+  background: -o-linear-gradient(#DDC, #FFF 70%);
+  background: linear-gradient(#DDC, #FFF 70%);
+}
+td#buttons {
+  width:240px;
+}
+td#statustxt {
+  height:40px;
+}
+#cmdline {
+  max-height:40px;
+  padding-left: 8px;
+  display:table-cell;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.uibutton {
+  width:80px;
+  height:40px;
+  border-width:1px;
+  padding:0;
+  margin:0;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+button:hover:active {
+  -ms-transform: translate(1px, 1px);
+  -webkit-transform: translate(1px, 1px);
+  transform: translate(1px, 1px);
+}
+</style>
+
+<script src='utttmain.js'></script>
+
+</head>
+
+<body onload='InitPage()'>
+<table class='bigtable'>
+  <tr id="statusrow">
+    <td id="buttons"><div class='btnlist'><button class='uibutton' id='newGameBtn'>New</button><button
+       class='uibutton' id='auto1Btn'>Auto</button><button
+       class='uibutton' id='back2Btn'>Take-back</button></div>
+    </td>
+    <td id='statustxt'>
+      <div id='cmdline'></div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan='2'><div class='filldiv' id='boardDiv'>
+      <canvas id='board'></canvas>
+    </div></td>
+  </tr>
+</table>
+</body>
+</html>
