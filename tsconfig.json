@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    /*
+      Notes on compiling for Android "internet" and closure compiler:
+      ES6  +  closure adv.opt : ok
+      ES5  +  closure adv.opt : all getters would not work.
+      ES6 w/o closure adv.opt : not working on android.
+      ES5 w/o closure         : ok.
+    */
+    //"lib" : ["es6", "dom"], //"es2015.promise"],
+    "target": "ES6",
+    "module": "CommonJS",
+    "sourceMap": true,
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    //"noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": false,
+    "allowJs": true,
+    "noImplicitAny": true,
+  },
+  "compileOnSave": true,
+  "exclude": [
+    "node_modules",
+    "glyph",
+    "**/*.d.ts"
+  ],
+  "files": [
+    "mcts2.ts",
+    "utttmain.ts",
+    "utttworker.ts",
+  ]
+}
